@@ -113,10 +113,10 @@ const App: React.FC = () => {
               <button onClick={() => handleNavClick('features')} className="text-sm font-medium text-forest-200 hover:text-white transition">Features</button>
               <button onClick={() => handleNavClick('demo')} className="text-sm font-medium text-forest-200 hover:text-white transition">How it Works</button>
               <button onClick={() => handleNavClick('mission')} className="text-sm font-medium text-forest-200 hover:text-white transition">Mission</button>
-              <a href="#" className="bg-white/10 hover:bg-white/20 border border-white/10 px-5 py-2.5 rounded-full font-medium transition backdrop-blur-md flex items-center space-x-2 text-white">
+              <button onClick={() => handleNavClick('mission')} className="bg-white/10 hover:bg-white/20 border border-white/10 px-5 py-2.5 rounded-full font-medium transition backdrop-blur-md flex items-center space-x-2 text-white">
                 <span>Beta Access</span>
                 <ArrowRight size={16} />
-              </a>
+              </button>
             </div>
 
             <div className="md:hidden">
@@ -499,7 +499,7 @@ const App: React.FC = () => {
                 placeholder="Enter your email"
                 className="flex-1 px-5 py-3 rounded-xl bg-forest-900 border border-forest-700 text-white focus:outline-none focus:border-neon-500 transition"
               />
-              <button className="px-6 py-3 bg-neon-500 text-forest-950 font-bold rounded-xl hover:bg-neon-400 transition">
+              <button disabled className="px-6 py-3 bg-gray-600 text-gray-400 font-bold rounded-xl cursor-not-allowed">
                 Get Invite
               </button>
             </form>
@@ -516,8 +516,6 @@ const App: React.FC = () => {
           </div>
           <div className="flex gap-8">
             <button onClick={() => setPage('privacy')} className="hover:text-white transition">Privacy</button>
-            <a href="#" className="hover:text-white transition">Terms</a>
-            <a href="#" className="hover:text-white transition">Twitter</a>
           </div>
           <div>
             © {new Date().getFullYear()} GardenDex. Open for growth.
