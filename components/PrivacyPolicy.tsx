@@ -1,10 +1,11 @@
 
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Markdown from 'react-markdown';
 import { ArrowLeft } from 'lucide-react';
 
 interface PrivacyPolicyProps {
-  onBack: () => void;
+  onBack?: () => void;
 }
 
 const markdownContent = `
@@ -50,11 +51,21 @@ If you have any questions about this Privacy Policy, please contact us at suppor
 `;
 
 const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({ onBack }) => {
+  const navigate = useNavigate();
+  
+  const handleBackClick = () => {
+    if (onBack) {
+      onBack();
+    } else {
+      navigate('/');
+    }
+  };
+
   return (
     <div className="min-h-screen bg-forest-950 text-forest-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto">
         <button 
-          onClick={onBack}
+          onClick={handleBackClick}
           className="flex items-center text-neon-400 hover:text-neon-500 transition mb-8 font-medium"
         >
           <ArrowLeft className="mr-2" size={20} />
