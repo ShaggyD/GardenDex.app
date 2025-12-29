@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import {
   Sprout,
   Scan,
@@ -32,27 +33,19 @@ const IMAGES = {
   addNote: "/screenshots/IMG_0545.jpeg"          // 10:24 Add Note
 };
 
-const App: React.FC = () => {
-  const [page, setPage] = useState<'home' | 'privacy'>('home');
+const HomePage: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { scrollY } = useScroll();
   const y1 = useTransform(scrollY, [0, 500], [0, 200]);
   const y2 = useTransform(scrollY, [0, 500], [0, -150]);
 
   const [activeFeature, setActiveFeature] = useState(0);
+  const navigate = useNavigate();
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   const scrollTo = (id: string) => {
-    if (page !== 'home') {
-      setPage('home');
-      // Wait for render
-      setTimeout(() => {
-        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
-    } else {
-      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-    }
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
     setIsMenuOpen(false);
   };
 
@@ -62,8 +55,6 @@ const App: React.FC = () => {
 
   // Logic for sticky scroll active state
   useEffect(() => {
-    if (page !== 'home') return;
-
     const handleScroll = () => {
       // Check individual text blocks position relative to center of screen
       const blocks = [0, 1, 2];
@@ -92,11 +83,7 @@ const App: React.FC = () => {
     window.addEventListener('scroll', handleScroll);
     handleScroll(); // Check on mount
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [page]);
-
-  if (page === 'privacy') {
-    return <PrivacyPolicy onBack={() => setPage('home')} />;
-  }
+  }, []);
 
   return (
     <div className="min-h-screen bg-forest-950 text-forest-50 selection:bg-neon-400 selection:text-forest-950 font-sans">
@@ -515,7 +502,7 @@ const App: React.FC = () => {
             <span className="font-bold text-white text-lg">GardenDex</span>
           </div>
           <div className="flex gap-8">
-            <button onClick={() => setPage('privacy')} className="hover:text-white transition">Privacy</button>
+            <button onClick={() => navigate('/privacy')} className="hover:text-white transition">Privacy</button>
           </div>
           <div>
             © {new Date().getFullYear()} GardenDex. Open for growth.
@@ -523,6 +510,22 @@ const App: React.FC = () => {
         </div>
       </footer>
     </div>
+  );
+};
+
+const PrivacyPolicyPage: React.FC = () => {
+  const navigate = useNavigate();
+  return <PrivacyPolicy onBack={() => navigate('/')} />;
+};
+
+const App: React.FC = () => {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/privacy" element={<PrivacyPolicyPage />} />
+      </Routes>
+    </Router>
   );
 };
 
