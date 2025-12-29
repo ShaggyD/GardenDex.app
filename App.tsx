@@ -513,12 +513,17 @@ const HomePage: React.FC = () => {
   );
 };
 
+const PrivacyPolicyPage: React.FC = () => {
+  const navigate = useNavigate();
+  return <PrivacyPolicy onBack={() => navigate('/')} />;
+};
+
 const App: React.FC = () => {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/privacy" element={<PrivacyPolicy onBack={() => window.location.href = '/'} />} />
+        <Route path="/privacy" element={<PrivacyPolicyPage />} />
       </Routes>
     </Router>
   );
